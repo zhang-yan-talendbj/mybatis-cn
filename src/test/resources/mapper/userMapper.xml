@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2009-2019 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.apache.ibatis.test.zy.run.mybatis.UserMapper">
+    <cache></cache>
+    <!-- 这里 namespace 必须是 UserMapper 接口的路径，不然要运行的时候要报错 “is not known to the
+    MapperRegistry”-->
+    <insert id="insertUser" parameterType="User">
+        insert into user(name,age) values(#{name ,jdbcType=VARCHAR},#{age, jdbcType=INTEGER})
+        <!--这里sql结尾不能加分号，否则报“ORA-00911”的错误 -->
+    </insert>
+    <!-- 这里的id必须和UserMapper接口中的接口方法名相同，不然运行的时候也要报错 -->
+    <select id="getUser" resultType="User" parameterType="java.lang.Integer">
+     select * from user where id=#{id}
+    </select>
+    <select id="getUserByName" resultType="User" parameterType="java.lang.String">
+     select * from user where name=#{name ,jdbcType=VARCHAR}
+    </select>
+</mapper>
+
